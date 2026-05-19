@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>StakeShield Earn</title>
+    <title>StakeShield • Earn &amp; Stake TON</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,92 +11,119 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <!-- Font Awesome for icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-      integrity="sha512-A/pGxBYY0XXtIsLs7OSnrnTbBXkZw8/8Yld/hmu/vuZ44j2+IQ6tKBh8hCVMMjk5mBIwLH/ntxI7lUJadG/8AQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <!-- TonConnect UI -->
+    <!-- TonConnect UI for wallet connection -->
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div id="app">
-      <!-- Top navigation bar -->
-      <header class="top-bar">
-        <button id="menuButton" class="icon-btn" aria-label="Menu">
-          <i class="fa-solid fa-bars"></i>
-        </button>
-        <div id="seasonInfo" class="season-info">Season 1 • 0 days left</div>
-        <div class="top-right-icons">
-          <button id="depositButton" class="icon-btn" aria-label="Deposit">
-            <i class="fa-solid fa-wallet"></i>
-          </button>
-          <button id="moreButton" class="icon-btn" aria-label="More options">
-            <i class="fa-solid fa-ellipsis-vertical"></i>
-          </button>
-        </div>
-      </header>
-
-      <!-- Main content area -->
+      <!-- Main pages container -->
       <main id="pages">
         <!-- Home page -->
         <section id="home" class="page active">
-          <div class="tasks-summary">
-            <h2>Earn WAVE Tokens</h2>
-            <div class="progress-container">
-              <div id="seasonProgress" class="progress-circle"></div>
-              <div class="progress-info">
-                <span id="tasksCompleted">0</span>/<span id="tasksTotal">0</span><br />
-                <small>tasks completed</small>
-              </div>
+          <!-- Top summary with balances and keys -->
+          <div class="top-summary">
+            <div class="summary-card">
+              <div class="summary-title">WAVE</div>
+              <div id="homeWaveBalance" class="summary-value">0</div>
             </div>
-            <button id="startTasksButton" class="primary-btn">
-              Start earning
+            <div class="summary-card">
+              <div class="summary-title">Keys</div>
+              <div id="homeKeys" class="summary-value">0</div>
+            </div>
+          </div>
+
+          <!-- Mystery box card -->
+          <div class="mystery-card">
+            <div class="mystery-content">
+              <h3>Mystery Box</h3>
+              <p>Use keys to open boxes and win prizes!</p>
+              <button id="openBoxButton" class="accent-btn">Open box</button>
+            </div>
+            <div class="mystery-icon">
+              <img src="assets/ton-logo-transparent.png" alt="Logo" />
+            </div>
+          </div>
+
+          <!-- Stats grid -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-title">Tickets</div>
+              <div id="homeTickets" class="stat-value">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-title">Next Ticket</div>
+              <div id="nextTicketCountdown" class="stat-value">1:00:00</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-title">Season</div>
+              <div id="homeSeason" class="stat-value">0/0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-title">Rank</div>
+              <div id="homeRank" class="stat-value">—</div>
+            </div>
+          </div>
+
+          <!-- Features grid -->
+          <div class="features-grid">
+            <button class="feature-item" id="featureSquad">
+              <img src="assets/nav-home.svg" class="feature-icon" alt="" />
+              <span>Squad</span>
+            </button>
+            <button class="feature-item" id="featureSpin">
+              <img src="assets/nav-bolt.svg" class="feature-icon" alt="" />
+              <span>Spin</span>
+            </button>
+            <button class="feature-item" id="featureLeaderboard">
+              <img src="assets/icon-coins.svg" class="feature-icon" alt="" />
+              <span>Leaderboard</span>
+            </button>
+            <button class="feature-item" id="featureDex">
+              <img src="assets/nav-user.svg" class="feature-icon" alt="" />
+              <span>DEX</span>
             </button>
           </div>
-          <div class="home-cards">
-            <button class="home-card" data-target="earn">
-              <i class="fa-solid fa-list-check"></i>
-              <span>Earn</span>
-            </button>
-            <button class="home-card" data-target="referral">
-              <i class="fa-solid fa-user-group"></i>
-              <span>Referrals</span>
-            </button>
-            <button class="home-card" data-target="vault">
-              <i class="fa-solid fa-wallet"></i>
-              <span>Vault</span>
-            </button>
+
+          <!-- Tasks preview -->
+          <div class="tasks-preview">
+            <div class="preview-header">
+              <h3>Tasks</h3>
+              <button data-target="earn" class="see-all-btn">See all</button>
+            </div>
+            <div id="tasksPreviewList" class="preview-list"></div>
           </div>
         </section>
 
         <!-- Earn tasks page -->
         <section id="earn" class="page hidden">
-          <h2>Earn Tasks</h2>
-          <p class="subtitle">Complete tasks to earn WAVE tokens.</p>
+          <div class="tasks-header">
+            <h2>Tasks</h2>
+            <div class="tasks-progress">
+              <div id="tasksProgressText" class="progress-text">0/0</div>
+              <div class="progress-bar">
+                <div id="tasksProgressBar" class="progress-inner"></div>
+              </div>
+            </div>
+          </div>
           <div id="tasksList" class="tasks-list"></div>
         </section>
 
         <!-- Referrals page -->
         <section id="referral" class="page hidden">
           <h2>Referrals</h2>
-          <p class="subtitle">Invite friends to earn bonuses.</p>
-          <div class="referral-info">
-            <p>Your referral code:</p>
-            <div class="code-container">
-              <span id="referralCode"></span>
-              <button id="copyReferral" class="icon-btn" aria-label="Copy">
-                <i class="fa-solid fa-copy"></i>
+          <p>Invite your friends and earn rewards.</p>
+          <div class="referral-box">
+            <div class="referral-code-row">
+              <span id="referralCode" class="referral-code">—</span>
+              <button id="copyReferralBtn" class="icon-btn">
+                <img src="assets/icon-bolt.svg" alt="copy" style="width:20px;height:20px" />
               </button>
             </div>
-            <p class="small-text">Share this code with your friends to earn extra rewards.</p>
+            <p class="hint">Share this code to invite friends.</p>
           </div>
           <div class="referral-stats">
-            <p>Friends invited: <span id="friendsInvited">0</span></p>
+            <p>Friends invited: <span id="friendsInvitedCount">0</span></p>
           </div>
         </section>
 
@@ -109,62 +136,73 @@
         <!-- Profile page -->
         <section id="profile" class="page hidden">
           <h2>Profile</h2>
-          <div class="user-info">
-            <div class="avatar-placeholder">
-              <i class="fa-solid fa-user"></i>
+          <div class="profile-info">
+            <div class="profile-avatar">
+              <img src="assets/ton-logo-transparent.png" alt="avatar" />
             </div>
-            <div>
-              <p class="username" id="username">Guest</p>
-              <p class="wallet-address" id="walletAddress">Not connected</p>
+            <div class="profile-details">
+              <p id="profileUsername" class="profile-name">Guest</p>
+              <p id="profileAddress" class="profile-address">Not connected</p>
             </div>
           </div>
-          <button id="connectWalletBtn" class="primary-btn">Connect wallet</button>
-          <div class="stats">
-            <p>WAVE balance: <span id="waveBalance">0</span></p>
-            <p>Tasks completed: <span id="profileTasksDone">0</span></p>
+          <button id="connectWalletButton" class="accent-btn full-width">Connect wallet</button>
+          <div class="profile-stats">
+            <div class="profile-stat">
+              <span class="label">WAVE</span>
+              <span id="profileWaveBalance" class="value">0</span>
+            </div>
+            <div class="profile-stat">
+              <span class="label">Keys</span>
+              <span id="profileKeys" class="value">0</span>
+            </div>
+            <div class="profile-stat">
+              <span class="label">Tickets</span>
+              <span id="profileTickets" class="value">0</span>
+            </div>
+            <div class="profile-stat">
+              <span class="label">Friends</span>
+              <span id="profileFriends" class="value">0</span>
+            </div>
+            <div class="profile-stat">
+              <span class="label">Tasks</span>
+              <span id="profileTasksCompleted" class="value">0</span>
+            </div>
           </div>
-          <div class="profile-actions">
-            <button data-target="referral" class="list-btn">
-              My referrals <i class="fa-solid fa-chevron-right"></i>
-            </button>
-            <button data-target="earn" class="list-btn">
-              Earn tasks <i class="fa-solid fa-chevron-right"></i>
-            </button>
-            <button data-target="vault" class="list-btn">
-              Vault <i class="fa-solid fa-chevron-right"></i>
-            </button>
+          <div class="profile-menu">
+            <button class="menu-item" data-target="referral">My referrals</button>
+            <button class="menu-item" data-target="earn">Earn tasks</button>
+            <button class="menu-item" id="profileOpenMysteryBox">Mystery box</button>
           </div>
         </section>
       </main>
 
       <!-- Bottom navigation bar -->
       <nav class="bottom-nav">
-        <button data-target="home" class="nav-item active" aria-label="Home">
-          <i class="fa-solid fa-house"></i>
+        <button class="nav-item active" data-target="home">
+          <img src="assets/nav-home.svg" class="nav-icon" alt="home" />
           <span>Home</span>
         </button>
-        <button data-target="earn" class="nav-item" aria-label="Earn">
-          <i class="fa-solid fa-list-check"></i>
-          <span>Earn</span>
+        <button class="nav-item" data-target="earn">
+          <img src="assets/nav-bolt.svg" class="nav-icon" alt="tasks" />
+          <span>Tasks</span>
         </button>
-        <button data-target="referral" class="nav-item" aria-label="Referrals">
-          <i class="fa-solid fa-user-group"></i>
+        <button class="nav-item" data-target="referral">
+          <img src="assets/icon-coins.svg" class="nav-icon" alt="referrals" />
           <span>Referrals</span>
         </button>
-        <button data-target="vault" class="nav-item" aria-label="Vault">
-          <i class="fa-solid fa-wallet"></i>
+        <button class="nav-item" data-target="vault">
+          <img src="assets/nav-coins.svg" class="nav-icon" alt="vault" />
           <span>Vault</span>
         </button>
-        <button data-target="profile" class="nav-item" aria-label="Profile">
-          <i class="fa-solid fa-user"></i>
+        <button class="nav-item" data-target="profile">
+          <img src="assets/nav-user.svg" class="nav-icon" alt="profile" />
           <span>Profile</span>
         </button>
       </nav>
 
-      <!-- TonConnect button placeholder (invisible) -->
-      <div id="tonConnectButtonContainer" style="display:none"></div>
+      <!-- Hidden TonConnect UI button container (modal attaches here) -->
+      <div id="tonConnectButtonContainer" style="display: none"></div>
     </div>
-
     <script src="script.js"></script>
   </body>
 </html>
