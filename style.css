@@ -6,20 +6,25 @@
   Telegram. Each section is built with CSS grid and flexbox for consistency.
 */
 
-/* CSS variables for easy theming */
+/* CSS variables for easy theming
+   These values define the base colours for the dark theme.
+   They can be overridden at runtime via Telegram WebApp theme parameters
+   to ensure the mini‑app blends seamlessly with the user’s Telegram theme. */
 :root {
-  /* Base background is nearly black with a hint of blue so the bright green accents pop */
-  --bg: #090d18;
-  /* Card backgrounds are slightly lighter than the page background to create depth */
-  --card-bg: #111a29;
-  /* Secondary backgrounds for elements like progress bars */
-  --secondary-bg: #1a2438;
-  /* Primary accent colour updated to a vivid neon green reminiscent of the reference design */
-  --accent: #a4ff00;
+  /* Base page background: a deep blue‑black inspired by Telegram dark mode */
+  --bg: #0f1011;
+  /* Card backgrounds are slightly lighter to create depth without high contrast */
+  --card-bg: #1b2431;
+  /* Secondary backgrounds for progress bars and subtle elements */
+  --secondary-bg: #2a3242;
+  /* Primary accent colour uses the official Toncoin blue for a professional look */
+  --accent: #4db8ff;
+  /* A lighter accent variant used for gradients */
+  --accent-light: #76c5ff;
   /* Default text colour */
   --text: #ffffff;
   /* Muted text for secondary information */
-  --muted: #8a95a5;
+  --muted: #8e9bb3;
 }
 
 html,
@@ -27,7 +32,8 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: 'Poppins', sans-serif;
+  /* Use Inter for a modern, professional feel with Poppins as fallback */
+  font-family: 'Inter', 'Poppins', sans-serif;
   background-color: var(--bg);
   color: var(--text);
 }
@@ -116,9 +122,10 @@ main {
   border-radius: 0.75rem;
   font-weight: 600;
   font-size: 0.9rem;
-  background: linear-gradient(90deg, var(--accent), #8cff00);
+  /* Gradient between primary and lighter accent for subtle depth */
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
   color: #0b0e15;
-  box-shadow: 0 0 8px rgba(182, 255, 42, 0.4);
+  box-shadow: 0 0 8px rgba(77, 184, 255, 0.4);
   transition: transform 0.1s ease;
 }
 .accent-btn:active {
@@ -176,8 +183,8 @@ main {
   width: 26px;
   height: 26px;
   margin-bottom: 0.4rem;
-  /* Tint icons to accent colour */
-  filter: brightness(0) saturate(100%) invert(76%) sepia(96%) saturate(321%) hue-rotate(63deg) brightness(113%) contrast(103%);
+  /* Tint icons to accent colour using a filter approximation for the Ton blue */
+  filter: brightness(0) saturate(100%) invert(65%) sepia(27%) saturate(616%) hue-rotate(188deg) brightness(93%) contrast(92%);
 }
 .feature-item:hover {
   border-color: var(--accent);
@@ -221,7 +228,7 @@ main {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(182, 255, 42, 0.2);
+  background: rgba(118, 197, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -296,7 +303,7 @@ main {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(182, 255, 42, 0.2);
+  background: rgba(118, 197, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -367,7 +374,7 @@ main {
 .icon-btn img {
   width: 20px;
   height: 20px;
-  filter: brightness(0) saturate(100%) invert(76%) sepia(96%) saturate(321%) hue-rotate(63deg) brightness(113%) contrast(103%);
+  filter: brightness(0) saturate(100%) invert(65%) sepia(27%) saturate(616%) hue-rotate(188deg) brightness(93%) contrast(92%);
 }
 .referral-stats {
   margin-top: 1rem;
@@ -398,7 +405,7 @@ main {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(182, 255, 42, 0.2);
+  background: rgba(118, 197, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -524,7 +531,8 @@ main {
   width: 24px;
   height: 24px;
   margin-bottom: 0.2rem;
-  filter: brightness(0) saturate(100%) invert(65%) sepia(52%) saturate(280%) hue-rotate(62deg) brightness(115%) contrast(104%);
+  /* Base filter for icons in the nav; tinted to a neutral grey */
+  filter: brightness(0) saturate(100%) invert(55%) sepia(6%) saturate(411%) hue-rotate(188deg) brightness(100%) contrast(94%);
 }
 .nav-item.active,
 .nav-item:hover {
@@ -532,5 +540,6 @@ main {
 }
 .nav-item.active .nav-icon,
 .nav-item:hover .nav-icon {
-  filter: brightness(0) saturate(100%) invert(77%) sepia(97%) saturate(411%) hue-rotate(61deg) brightness(117%) contrast(104%);
+  /* Active or hover filter tinted to accent blue */
+  filter: brightness(0) saturate(100%) invert(65%) sepia(27%) saturate(616%) hue-rotate(188deg) brightness(93%) contrast(92%);
 }

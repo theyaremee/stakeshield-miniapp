@@ -5,6 +5,25 @@
 // connection via TonConnect and interactive features like mystery boxes.
 
 document.addEventListener('DOMContentLoaded', () => {
+  /* Adapt colours to Telegram theme if available */
+  const tg = window.Telegram && window.Telegram.WebApp;
+  if (tg && tg.themeParams) {
+    const tp = tg.themeParams;
+    // Helper to set CSS variable if defined
+    const setVar = (varName, value) => {
+      if (value) document.documentElement.style.setProperty(varName, value);
+    };
+    // Map Telegram theme params to CSS variables
+    setVar('--bg', tp.bg_color);
+    setVar('--card-bg', tp.secondary_bg_color);
+    setVar('--secondary-bg', tp.bg_color); // fallback
+    setVar('--text', tp.text_color);
+    setVar('--muted', tp.hint_color);
+    setVar('--accent', tp.button_color || tp.accent_text_color);
+    setVar('--accent-light', tp.button_color || tp.accent_text_color);
+  }
+  // Signal to Telegram that the app is ready. This prevents white flashes on load.
+  if (tg && typeof tg.ready === 'function') tg.ready();
   /* Helper selector */
   const $ = (sel) => document.querySelector(sel);
 
